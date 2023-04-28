@@ -1,1 +1,3 @@
-output+=fixedCode(e, r, input[i]);
+cout << ans << endl;
+            cout <<head->weight << endl;
+            break;
