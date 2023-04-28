@@ -129,7 +129,7 @@ string encode(string input){
             update(tree->head, s, ans, "");
             cout << ans << endl;
             cout <<tree->head->weight << endl;
-            break;
+            // break;
         }
         else{
             
