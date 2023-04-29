@@ -1,6 +1,5 @@
 #include<iostream>
-#include<map>
-using namespace std;
+#include "mapOfCharacters.cpp"
 
 class AdaptiveHuffmanTreeNode{
     public:
@@ -51,7 +50,6 @@ string bin(long n){
 }
 
 string fixedCode(int e, int r, int index){
-    index = index + 1;
     string output = "";
     //if index lies in [1,2r]
     if(index >=1 && index<=2*r){
@@ -97,21 +95,36 @@ void update(AdaptiveHuffmanTreeNode* head, string element, string &ans, string t
     
 }
 
+void findNytCode(AdaptiveHuffmanTreeNode* head, AdaptiveHuffmanTreeNode* nyt, string &nytCode, string temp){
+    if(head == NULL){
+        return;
+    }
+    if(head->left == NULL && head->right == NULL && head==nyt){
+        nytCode = temp;
+        return;
+    }
+    findNytCode(head->left,nyt, nytCode, temp+"0");
+    findNytCode(head->right,nyt, nytCode, temp+"1");
+}
+
+
 string encode(string input){
     //2 parameters e and r
     // m = 94 = 2^e + r
     //e = 6, r = 30
-    int e = 4;
-    int r = 10;
+    int e = 6;
+    int r = 30;
     AdaptiveHuffmanTree* tree = new AdaptiveHuffmanTree();
     string output = "";
 
+    map<string, int> mapOfChars = mapOfCharacters();
     map<string, int> existsInTree;
     string s(1, input[0]);
     existsInTree[s] = 1;
 
     //setting up tree with input[0]
-    output += fixedCode(e, r, 0);
+    output += fixedCode(e, r, mapOfChars[s]);
+    cout << mapOfChars[s] << endl;
     AdaptiveHuffmanTreeNode* head = new AdaptiveHuffmanTreeNode(1);
     tree->head = head;
     tree->head->left = tree->nyt;
@@ -127,11 +140,35 @@ string encode(string input){
         if(existsInTree[s]){
             string ans = "";
             update(tree->head, s, ans, "");
-            cout << ans << endl;
-            cout <<tree->head->weight << endl;
-            // break;
+            output+=ans;
         }
+        //else if s is not in tree -> add s to tree
         else{
+            // cout << s << " " << fixedCode(e, r, mapOfChars[s]) << endl;
+            output = output + tree->nytCode + fixedCode(e, r, mapOfChars[s]);
+            existsInTree[s] = 1;
+
+            AdaptiveHuffmanTreeNode* newNode = new AdaptiveHuffmanTreeNode(1);
+            newNode->parent = tree->nyt->parent;
+            newNode->left = tree->nyt;
+            newNode->right = new AdaptiveHuffmanTreeNode(1, s);
+            newNode->right->parent = newNode;
+            tree->nyt->parent->left = newNode;
+            tree->nyt->parent = newNode;
+
+            newNode = newNode->parent;
+            while(newNode!=NULL){
+                if(newNode->left->weight > newNode->right->weight){
+                    AdaptiveHuffmanTreeNode* temp = newNode->left;
+                    newNode->left = newNode->right;
+                    newNode->right = temp;
+                }
+                newNode->weight = newNode->left->weight + newNode->right->weight;
+                newNode=newNode->parent;
+            }
+            string nytCode = "";
+            findNytCode(tree->head,tree->nyt, nytCode, "");
+            tree->nytCode = nytCode;
             
         }
     }
