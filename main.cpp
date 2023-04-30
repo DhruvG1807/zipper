@@ -1,37 +1,6 @@
 #include<iostream>
 #include "mapOfCharacters.cpp"
-
-class AdaptiveHuffmanTreeNode{
-    public:
-        int weight;
-        string character;
-        AdaptiveHuffmanTreeNode* left;
-        AdaptiveHuffmanTreeNode* right;
-        AdaptiveHuffmanTreeNode* parent;
-
-        AdaptiveHuffmanTreeNode(int weight = 0, string character = ""){
-            this->weight = weight;
-            this->character = character;
-            this->left = NULL;
-            this->right = NULL;
-            this->parent = NULL;
-        }
-};
-
-class AdaptiveHuffmanTree{
-    public:
-        AdaptiveHuffmanTreeNode* head;
-        AdaptiveHuffmanTreeNode* nyt;
-        string nytCode;
-
-        AdaptiveHuffmanTree(){
-            AdaptiveHuffmanTreeNode *nyt = new AdaptiveHuffmanTreeNode();
-            this->head = nyt;
-            this->nyt = nyt;
-            this->nytCode = "";
-        }
-};
-
+#include "classes.cpp"
 
 
 string bin(long n){
@@ -124,7 +93,6 @@ string encode(string input){
 
     //setting up tree with input[0]
     output += fixedCode(e, r, mapOfChars[s]);
-    cout << mapOfChars[s] << endl;
     AdaptiveHuffmanTreeNode* head = new AdaptiveHuffmanTreeNode(1);
     tree->head = head;
     tree->head->left = tree->nyt;
@@ -176,8 +144,8 @@ string encode(string input){
     return output;
 }
 
-int main(){
-    string input = "aardvark";
+int main(){ 
+    string input = "My name is Aryaman Gupta. I am a student at jiit Noida!";
     // cin >> input;
     //change e and r values later
     // cout << fixedCode(4, 10, 21) << endl;
