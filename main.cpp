@@ -98,8 +98,8 @@ string encode(string input){
     //2 parameters e and r
     // m = 94 = 2^e + r
     //e = 6, r = 30
-    int e = 4;
-    int r = 10;
+    int e = 6;
+    int r = 30;
     AdaptiveHuffmanTree* tree = new AdaptiveHuffmanTree();
     string output = "";
 
@@ -164,7 +164,7 @@ string encode(string input){
 }
 
 int main(){ 
-    string input = "abccc";
+    string input = "My name is Aryaman Gupta. I am a student at JIIT{[]]]} Noida!";
     // cin >> input;
     //change e and r values later
     // cout << fixedCode(4, 10, 21) << endl;

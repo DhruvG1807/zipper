@@ -41,12 +41,12 @@ void updateTree(string current_char, AdaptiveHuffmanTree* tree){
 
     newNode = newNode->parent;
     while(newNode!=NULL){
+        newNode->weight = newNode->left->weight + newNode->right->weight;
         if(newNode->left->weight > newNode->right->weight){
             AdaptiveHuffmanTreeNode* temp = newNode->left;
             newNode->left = newNode->right;
             newNode->right = temp;
         }
-        newNode->weight = newNode->left->weight + newNode->right->weight;
         newNode=newNode->parent;
     }
     string nytCode = "";
@@ -58,8 +58,8 @@ string decode(string input){
     //2 parameters e and r
     // m = 94 = 2^e + r
     //e = 6, r = 30
-    int e = 4;
-    int r = 10;
+    int e = 6;
+    int r = 30;
     AdaptiveHuffmanTree* tree = new AdaptiveHuffmanTree();
     string output = "";
 
@@ -95,8 +95,8 @@ string decode(string input){
     while(i<input.size()){
         temp = "";
         string tempNytCode = "";
-        for(int j = i; j < i + tree->nytCode.size(); j++){
-            if(j<input.size()){
+        if(i + tree->nytCode.size() < input.size()){
+            for(int j = i; j < i + tree->nytCode.size(); j++){
                 tempNytCode += input[j];
             }
         }
@@ -144,12 +144,21 @@ string decode(string input){
                 temp += input[i];
                 i++;
             }
+            // cout << curr->character << endl;
             output += curr->character;
             curr->weight+=1;
-            while(curr->parent!=NULL){
-                curr = curr->parent;
-                curr->weight+=1;
+            curr = curr->parent;
+            
+            while(curr!=NULL){
+                curr->weight = curr->left->weight + curr->right->weight;
+                if(curr->left->weight > curr->right->weight){
+                    AdaptiveHuffmanTreeNode* temp = curr->left;
+                    curr->left = curr->right;
+                    curr->right = temp;
+                }
+                curr=curr->parent;
             }
+
             // cout << tree->head->weight << endl;
             // // cout << i << endl;
             // break;
@@ -160,7 +169,7 @@ string decode(string input){
 }
 
 int main(){
-    string s = "000000000010000010101111";
+    string s = "01001100001100000100000100000110111000000000111000001100111100000010011011111000001000111111000010010110111111100001101011111111000010001101111011111011110111011011111111100010000011111111110000101001111111111100000111111111111111100001001111110111111111111100100001110111111111111110001000101101111011111011011110110111111110111111111111110111111111111011111111111111100000001111111101110111111111111110110111101111111111111101101111111111111111000100011111111111111110101111111111111111011111111111111011000101101111111111111111101001011101111111111111111111001011001111111111111111111100101101111111111111111111111011111111111111111111111111111111111111111111100101111110111111111111111111111100010011111111111111111111111110000001110111111101111111111111111101111011111111111111111111110100100100";
     cout << decode(s) << endl;
     return 0;
 }
