@@ -39,29 +39,46 @@ string fixedCode(int e, int r, int index){
     return output;
 }
 
+AdaptiveHuffmanTreeNode* reqNode;
+
 void update(AdaptiveHuffmanTreeNode* head, string element, string &ans, string temp){
     if(head == NULL){
         return;
     }
     if(head->character == element){
         ans = temp;
-        head->weight++;
-        head=head->parent;
-        while(head!=NULL){
-            if(head->left->weight > head->right->weight){
-                AdaptiveHuffmanTreeNode* temp = head->left;
-                head->left = head->right;
-                head->right = temp;
-            }
-            head->weight = head->left->weight + head->right->weight;
-            head=head->parent;
-        }
+        reqNode = head;
+        // head->weight++;
+        // head=head->parent;
+        // while(head!=NULL){
+        //     if(head->left->weight > head->right->weight){
+        //         AdaptiveHuffmanTreeNode* temp = head->left;
+        //         head->left = head->right;
+        //         head->right = temp;
+        //     }
+        //     head->weight = head->left->weight + head->right->weight;
+        //     head=head->parent;
+        // }
         return;
     }
     
     update(head->left, element, ans, temp+"0");
     update(head->right, element, ans, temp+"1");
     
+}
+
+void updateTree(AdaptiveHuffmanTreeNode* head){
+    head->weight++;
+    head=head->parent;
+    while(head!=NULL){
+        if(head->left->weight > head->right->weight){
+            AdaptiveHuffmanTreeNode* temp = head->left;
+            head->left = head->right;
+            head->right = temp;
+        }
+        head->weight = head->left->weight + head->right->weight;
+        head=head->parent;
+    }
 }
 
 void findNytCode(AdaptiveHuffmanTreeNode* head, AdaptiveHuffmanTreeNode* nyt, string &nytCode, string temp){
@@ -81,8 +98,8 @@ string encode(string input){
     //2 parameters e and r
     // m = 94 = 2^e + r
     //e = 6, r = 30
-    int e = 6;
-    int r = 30;
+    int e = 4;
+    int r = 10;
     AdaptiveHuffmanTree* tree = new AdaptiveHuffmanTree();
     string output = "";
 
@@ -108,6 +125,8 @@ string encode(string input){
         if(existsInTree[s]){
             string ans = "";
             update(tree->head, s, ans, "");
+            updateTree(reqNode);
+            // cout << s << " " << ans << endl;
             output+=ans;
         }
         //else if s is not in tree -> add s to tree
@@ -145,7 +164,7 @@ string encode(string input){
 }
 
 int main(){ 
-    string input = "My name is Aryaman Gupta. I am a student at jiit Noida!";
+    string input = "abccc";
     // cin >> input;
     //change e and r values later
     // cout << fixedCode(4, 10, 21) << endl;
