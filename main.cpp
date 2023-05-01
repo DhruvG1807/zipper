@@ -1,7 +1,7 @@
 #include<iostream>
-#include "mapOfCharacters.cpp"
-#include "classes.cpp"
-
+#include "headers/mapOfCharacters.cpp"
+#include "headers/classes.cpp"
+#include <fstream> 
 
 string bin(long n){
     long i;
@@ -163,8 +163,23 @@ string encode(string input){
     return output;
 }
 
+string mainCompressFunction(string s){
+    return encode(s);
+}
+
 int main(){ 
-    string input = "My name is Aryaman Gupta. I am a student at JIIT{[]]]} Noida!";
+    // string input = "My name is Aryaman Gupta. I am a student at JIIT{[]]]} Noida!";
+    string input = "";
+    string myText;
+
+    // Read from the text file
+    ifstream MyReadFile("./uploads/file.txt");
+
+    // Use a while loop together with the getline() function to read the file line by line
+    while (getline (MyReadFile, myText)) {
+    // Output the text from the file
+        input+=myText;
+    }
     // cin >> input;
     //change e and r values later
     // cout << fixedCode(4, 10, 21) << endl;

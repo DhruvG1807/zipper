@@ -75,14 +75,15 @@
     <body>
         <div style="color: white; text-align:center;">
             <h1 class="title">COMPRESS YOUR FILE</h1>
-        <form action="/compress" method="POST" enctype="multipart/form-data">
+        <form action="/compress" name="file-form" method="POST" enctype="multipart/form-data">
                 <label style="margin-top:20px; margin-bottom:30px; font-weight:lighter; font-size:16px;"></label>
                 <input type="file" name="file" id="file" style="font-size:20px; width:250px; height:35px; margin-left:44%;">
-            <button style="margin-top:30px;" class="bton" type="submit">Upload</button><br>
+            <button style="margin-top:30px;" class="bton" type="submit">Upload</button> <button style="margin-top:30px;" class="bton"><a style="text-decoration: none;" href = "/?home">Home</a></button><br>
         </form>
 
         <p id="success" style="margin-top:50px;"></p><br>
         <button class="bton2" id="dd" style= "margin-top:20px;"><a id="download" href="/download" style="text-decoration:none; color:black;"></a></button>
+        <!-- <button class="bton" id="dd" style= "margin-top:20px;"><a id="download" href="/" style="text-decoration:none; color:black;">HOME</a></button> -->
 
         <div class="col-2" style="flex: 1;">
             <div style="margin: 5px 30px;" id = "myalert" class="alert alert-success collapse" >
