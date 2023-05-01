@@ -2,7 +2,6 @@ import os
 import time
 import glob
 from flask import Flask, redirect, render_template, request, send_file
-import subprocess
 
 # Configure Application
 app = Flask(__name__)
@@ -43,25 +42,8 @@ def compress():
             print(up_file.filename)
             up_file.save(os.path.join(app.config["FILE_UPLOADS"], filename))
             os.system("mv ./uploads/* ./uploads/file.txt")
-
-            # f = open("./uploads/file.txt", "r")
-            # content = f.read()
-            # print(content)
-
-            # filename = filename[:filename.index(".",1)]
-            # filename = "file"
-            # ftype = "-compressed.bin"
-            # os.system('touch uploads/{}'.format(filename+ftype))
-            # proc = subprocess.Popen(["", "compress.sh"], stdout=subprocess.PIPE)
-            # proc.wait()
-            # print(proc.stdout)
-            os.system("g++ main.cpp")
+            os.system("g++ compress.cpp")
             os.system("./a.out > ./downloads/file-compressed.bin")
-            
-            # while True:
-            #     if 'uploads/{}-compressed.bin'.format(filename) in glob.glob('uploads/*-compressed.bin'):
-            #         os.system('mv uploads/{}-compressed.bin downloads/'.format(filename))
-            #         break
 
             return render_template("compress.html", check=1)
 
@@ -85,17 +67,9 @@ def decompress():
             print(up_file.filename)
             up_file.save(os.path.join(app.config["FILE_UPLOADS"], filename))
             os.system("mv ./uploads/* ./uploads/file-compressed.bin")
-            os.system("g++ decoding.cpp")
+            os.system("g++ decompress.cpp")
             os.system("./a.out > ./downloads/file.txt")
-            # os.system('./d uploads/{}'.format(filename))
-            # f = open('uploads/{}'.format(filename), 'rb')
-            # ftype = "-decompressed." + (f.read(int(f.read(1)))).decode("utf-8")
-            # filename = filename[:filename.index("-",1)]
-
-            # while True:
-            #     if 'uploads/{}{}'.format(filename, ftype) in glob.glob('uploads/*-decompressed.*'):
-            #         os.system('mv uploads/{}{} downloads/'.format(filename, ftype))
-                    # break
+            
 
             return render_template("decompress.html", check=1)
 

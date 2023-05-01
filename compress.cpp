@@ -48,17 +48,6 @@ void update(AdaptiveHuffmanTreeNode* head, string element, string &ans, string t
     if(head->character == element){
         ans = temp;
         reqNode = head;
-        // head->weight++;
-        // head=head->parent;
-        // while(head!=NULL){
-        //     if(head->left->weight > head->right->weight){
-        //         AdaptiveHuffmanTreeNode* temp = head->left;
-        //         head->left = head->right;
-        //         head->right = temp;
-        //     }
-        //     head->weight = head->left->weight + head->right->weight;
-        //     head=head->parent;
-        // }
         return;
     }
     
@@ -131,7 +120,6 @@ string encode(string input){
         }
         //else if s is not in tree -> add s to tree
         else{
-            // cout << s << " " << fixedCode(e, r, mapOfChars[s]) << endl;
             output = output + tree->nytCode + fixedCode(e, r, mapOfChars[s]);
             existsInTree[s] = 1;
 
@@ -180,9 +168,6 @@ int main(){
     // Output the text from the file
         input+=myText;
     }
-    // cin >> input;
-    //change e and r values later
-    // cout << fixedCode(4, 10, 21) << endl;
     cout << encode(input) << endl;
     return 0;
 }

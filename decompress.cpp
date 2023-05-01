@@ -110,8 +110,7 @@ string decode(string input){
             for(j= i; j < i + e; j++){
                 temp += input[j];
             }
-            // cout << temp << " "<<j<< endl;
-            // break;
+            
             if(binaryToDecimal(temp) < r){
                 temp += input[j];
                 output += mp[binaryToDecimal(temp) + 1]; 
@@ -145,7 +144,7 @@ string decode(string input){
                 temp += input[i];
                 i++;
             }
-            // cout << curr->character << endl;
+
             output += curr->character;
             curr->weight+=1;
             curr = curr->parent;
@@ -159,19 +158,11 @@ string decode(string input){
                 }
                 curr=curr->parent;
             }
-
-            // cout << tree->head->weight << endl;
-            // // cout << i << endl;
-            // break;
         }
     }
 
     return output;
 }
-
-// string mainDecompressFunction(string s){
-//     return decode(s);
-// }
 
 int main(){
     string input = "";
