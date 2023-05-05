@@ -6,7 +6,7 @@
 string bin(long n){
     long i;
     string s = "";
-    s+="0";
+    s+="\0";
     for (i = 1 << 30; i > 0; i = i / 2){
         if((n & i) != 0){
             s+="1";
@@ -156,7 +156,7 @@ string mainCompressFunction(string s){
 }
 
 int main(){ 
-    // string input = "My name is Aryaman Gupta. I am a student at JIIT{[]]]} Noida!";
+    // string input = "My name is Dhruv Gupta. I am a student at JIIT{[]]]} Noida!";
     string input = "";
     string myText;
 
@@ -164,7 +164,7 @@ int main(){
     ifstream MyReadFile("./uploads/file.txt");
 
     // Use a while loop together with the getline() function to read the file line by line
-    while (getline (MyReadFile, myText)) {
+    while (getline(MyReadFile, myText)) {
     // Output the text from the file
         input+=myText;
     }
